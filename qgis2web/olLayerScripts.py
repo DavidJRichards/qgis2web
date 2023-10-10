@@ -409,7 +409,7 @@ jsonSource_%(n)s.addFeatures(features_%(n)s);''' % {"n": layerName,
         layerCode += writeHeatmap(hmRadius, hmRamp, hmWeight, hmWeightMax)
     if isinstance(renderer, QgsSingleSymbolRenderer):
         layerCode += '''
-                title: '<img src="styles/legend/%(icon)s.png" /> %(name)s'
+                title: "<img src='styles/legend/%(icon)s.png' /> %(name)s"
             });''' % {"icon": layerName,
                       "name": layer.name().replace("'", "\\'")}
     elif isinstance(renderer, QgsCategorizedSymbolRenderer):
@@ -418,7 +418,7 @@ jsonSource_%(n)s.addFeatures(features_%(n)s);''' % {"n": layerName,
         layerCode += getLegend(renderer.ranges(), layer, layerName)
     else:
         layerCode += '''
-                title: '%(name)s'
+                title: "%(name)s"
             });''' % {"name": layer.name()}
     return layerCode
 
@@ -428,10 +428,10 @@ def getLegend(subitems, layer, layerName):
     for count, subitem in enumerate(subitems):
         text = subitem.label().replace("'", "\\'")
         icons += ("""\\
-    <img src="styles/legend/%(icon)s_%(count)s.png" /> %(text)s<br />""" %
+    <img src='styles/legend/%(icon)s_%(count)s.png' /> %(text)s<br />""" %
                   {"icon": layerName, "count": count, "text": text})
     legend = '''
-    title: '%(name)s<br />%(icons)s'
+    title: "%(name)s<br />%(icons)s"
         });''' % {"icons": icons, "name": layer.name()}
     return legend
 
